@@ -1,4 +1,5 @@
 ﻿using CodeTheWay.Web.Ui.Models;
+using CodeTheWay.Web.Ui.Models.ViewModels;
 using CodeTheWay.Web.Ui.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,14 +28,21 @@ namespace CodeTheWay.Web.Ui.Controllers
             return View(new Student());
         }
 
-        public async Task<IActionResult> Register(Student model)
+        public async Task<IActionResult> Register(StudentRegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.Age >= 18)
             {
-                var student = await StudentService.Create(model);
-                return RedirectToAction("Index"); 
+                Student student = new Student()
+                {
+                    Id = model.Id,
+                    LastName = model.LastName,
+                    FirstMidName = model.FirstName
+                };
+
+                var result = await StudentService.Create(student);
+                return RedirectToAction("Index");
             }
-            return View(model);
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Edit(Guid id)

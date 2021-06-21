@@ -10,5 +10,6 @@ namespace CodeTheWay.Web.Ui.Models
         public Guid Id { get; set; }
         public string LastName { get; set; }
         public string FirstMidName { get; set; }
+        public int Age { get; set; }
     }
 }
